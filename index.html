@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pokédex</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="pokedex" id="pokedex">
+
+    <div class="top">
+
+        <div class="screen">
+
+            <div class="scan" id="scan"></div>
+
+            <h2 id="name">POKÉDEX</h2>
+
+            <img id="sprite" />
+
+            <p id="types"></p>
+
+            <select id="formsSelect" onchange="changeForm()" style="display:none;"></select>
+
+            <p id="desc">ENTER A POKÉMON NUMBER</p>
+
+        </div>
+
+        <div class="statsBox">
+            <canvas id="statsChart"></canvas>
+        </div>
+
+    </div>
+
+    <div class="bottom">
+        <canvas id="typeChart"></canvas>
+    </div>
+
+    <div class="controls">
+
+        <input id="input" placeholder="Enter Pokémon #" />
+
+        <button onclick="search()">SEARCH</button>
+
+        <button onclick="toggleScan()" id="scanBtn">SCAN: ON</button>
+
+        <button onclick="toggleShiny()" id="shinyBtn">SHINY: OFF</button>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
