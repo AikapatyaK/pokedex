@@ -7,192 +7,381 @@ let currentIndex = 0;
 let scanEnabled = true;
 let shinyMode = false;
 
-/* 18 TYPE SYSTEM */
 const typeEffect = {
-    normal: { rock:0.5, ghost:0, steel:0.5 },
-    fire: { grass:2, ice:2, bug:2, steel:2, water:0.5, rock:0.5, dragon:0.5 },
-    water: { fire:2, rock:2, ground:2, water:0.5, grass:0.5, dragon:0.5 },
-    electric: { water:2, flying:2, electric:0.5, ground:0 },
-    grass: { water:2, ground:2, rock:2, fire:0.5, grass:0.5, flying:0.5, bug:0.5, poison:0.5, dragon:0.5, steel:0.5 },
-    ice: { grass:2, ground:2, flying:2, dragon:2, fire:0.5, water:0.5, ice:0.5, steel:0.5 },
-    fighting: { normal:2, rock:2, steel:2, ice:2, dark:2, ghost:0, flying:0.5, poison:0.5, psychic:0.5, bug:0.5, fairy:0.5 },
-    poison: { grass:2, fairy:2, poison:0.5, ground:0.5, rock:0.5, ghost:0.5, steel:0 },
-    ground: { fire:2, electric:2, poison:2, rock:2, steel:2, grass:0.5, bug:0.5, flying:0 },
-    flying: { grass:2, fighting:2, bug:2, electric:0.5, rock:0.5, steel:0.5 },
-    psychic: { fighting:2, poison:2, psychic:0.5, dark:0, steel:0.5 },
-    bug: { grass:2, psychic:2, dark:2, fire:0.5, fighting:0.5, flying:0.5, poison:0.5, ghost:0.5, steel:0.5, fairy:0.5 },
-    rock: { fire:2, ice:2, flying:2, bug:2, fighting:0.5, ground:0.5, steel:0.5 },
-    ghost: { psychic:2, ghost:2, normal:0, dark:0.5 },
-    dragon: { dragon:2, steel:0.5, fairy:0 },
-    dark: { psychic:2, ghost:2, fighting:0.5, dark:0.5, fairy:0.5 },
-    steel: { ice:2, rock:2, fairy:2, fire:0.5, water:0.5, electric:0.5, steel:0.5 },
-    fairy: { fighting:2, dragon:2, dark:2, fire:0.5, poison:0.5, steel:0.5 }
+normal:{rock:0.5,ghost:0,steel:0.5},
+fire:{grass:2,ice:2,bug:2,steel:2,water:0.5,rock:0.5,dragon:0.5},
+water:{fire:2,rock:2,ground:2,water:0.5,grass:0.5,dragon:0.5},
+electric:{water:2,flying:2,electric:0.5,ground:0},
+grass:{water:2,ground:2,rock:2,fire:0.5,grass:0.5,flying:0.5,bug:0.5,poison:0.5,dragon:0.5,steel:0.5},
+ice:{grass:2,ground:2,flying:2,dragon:2,fire:0.5,water:0.5,ice:0.5,steel:0.5},
+fighting:{normal:2,rock:2,steel:2,ice:2,dark:2,ghost:0},
+poison:{grass:2,fairy:2,steel:0},
+ground:{fire:2,electric:2,poison:2,rock:2,steel:2,flying:0},
+flying:{grass:2,fighting:2,bug:2},
+psychic:{fighting:2,poison:2,dark:0},
+bug:{grass:2,psychic:2,dark:2},
+rock:{fire:2,ice:2,flying:2,bug:2},
+ghost:{psychic:2,ghost:2,normal:0},
+dragon:{dragon:2,fairy:0},
+dark:{psychic:2,ghost:2},
+steel:{ice:2,rock:2,fairy:2},
+fairy:{fighting:2,dragon:2,dark:2}
 };
 
-/* SCAN */
-function toggleScan() {
-    scanEnabled = !scanEnabled;
-    document.getElementById("scanBtn").innerText =
-        scanEnabled ? "SCAN: ON" : "SCAN: OFF";
+function toggleScan(){
+scanEnabled=!scanEnabled;
+
+document.getElementById("scanBtn").innerText=
+scanEnabled?"SCAN: ON":"SCAN: OFF";
 }
 
-function playScan() {
+function playScan(){
 
-    if (!scanEnabled) return;
+if(!scanEnabled)return;
 
-    const scan = document.getElementById("scan");
+const scan=document.getElementById("scan");
 
-    scan.classList.remove("active");
-    void scan.offsetWidth;
-    scan.classList.add("active");
+scan.classList.remove("active");
+
+void scan.offsetWidth;
+
+scan.classList.add("active");
+
 }
 
-/* SHINY */
-function toggleShiny() {
-    shinyMode = !shinyMode;
-    document.getElementById("shinyBtn").innerText =
-        shinyMode ? "SHINY: ON" : "SHINY: OFF";
-    updateUI();
+function toggleShiny(){
+
+shinyMode=!shinyMode;
+
+document.getElementById("shinyBtn").innerText=
+shinyMode?"SHINY: ON":"SHINY: OFF";
+
+updateUI();
+
 }
 
-/* SEARCH */
-async function search() {
+async function search(){
 
-    const id = document.getElementById("input").value;
-    if (!id) return;
+let input=
+document
+.getElementById("input")
+.value
+.trim()
+.toLowerCase();
 
-    playScan();
+if(!input)return;
 
-    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    const data = await res.json();
+playScan();
 
-    const speciesRes = await fetch(data.species.url);
-    const species = await speciesRes.json();
+try{
 
-    const formEntries = species.varieties;
+const res=
+await fetch(
+`https://pokeapi.co/api/v2/pokemon/${input}`
+);
 
-    currentForms = [];
+if(!res.ok){
 
-    const select = document.getElementById("formsSelect");
-    select.innerHTML = "";
+alert("POKEMON NOT FOUND");
 
-    for (let i = 0; i < formEntries.length; i++) {
+return;
 
-        const formRes = await fetch(formEntries[i].pokemon.url);
-        const formData = await formRes.json();
-
-        currentForms.push(formData);
-
-        const option = document.createElement("option");
-        option.value = i;
-        option.innerText = formData.name.toUpperCase();
-        select.appendChild(option);
-    }
-
-    select.style.display = "inline-block";
-
-    currentIndex = 0;
-
-    setTimeout(() => {
-        updateUI();
-        document.getElementById("pokedex").classList.add("active");
-    }, 900);
 }
 
-/* FORM */
-function changeForm() {
-    currentIndex = document.getElementById("formsSelect").value;
-    updateUI();
+const data=
+await res.json();
+
+const species=
+await(
+await fetch(
+data.species.url
+)
+).json();
+
+currentForms=[];
+
+const select=
+document.getElementById(
+"formsSelect"
+);
+
+select.innerHTML="";
+
+for(const v of species.varieties){
+
+const form=
+await(
+await fetch(
+v.pokemon.url
+)
+).json();
+
+currentForms.push(form);
+
+const option=
+document.createElement(
+"option"
+);
+
+option.value=
+currentForms.length-1;
+
+option.text=
+form.name
+.toUpperCase();
+
+select.appendChild(
+option
+);
+
 }
 
-/* UI */
-function updateUI() {
+select.style.display=
+"inline-block";
 
-    const p = currentForms[currentIndex];
+currentIndex=0;
 
-    document.getElementById("name").innerText =
-        p.name.toUpperCase();
+setTimeout(()=>{
 
-    const sprite = document.getElementById("sprite");
+updateUI();
 
-    sprite.src = shinyMode
-        ? p.sprites.other["official-artwork"].front_shiny
-        : p.sprites.other["official-artwork"].front_default;
+document
+.getElementById(
+"pokedex"
+)
+.classList.add(
+"active"
+);
 
-    const types = p.types.map(t => t.type.name);
+},900);
 
-    document.getElementById("types").innerText =
-        "TYPES: " + types.map(t => t.toUpperCase()).join(" / ");
+}catch{
 
-    drawStats(p.stats);
-    drawTypeChart(types);
+alert(
+"POKEMON NOT FOUND"
+);
+
 }
 
-/* STATS */
-function drawStats(stats) {
-
-    const ctx = document.getElementById("statsChart");
-
-    if (chart) chart.destroy();
-
-    chart = new Chart(ctx, {
-        type: "radar",
-        data: {
-            labels: ["HP","ATK","DEF","SP.ATK","SP.DEF","SPD"],
-            datasets: [{
-                data: stats.map(s => s.base_stat),
-                backgroundColor: "rgba(0,200,255,0.2)",
-                borderColor: "blue"
-            }]
-        }
-    });
 }
 
-/* TYPE */
-function calc(types) {
+function changeForm(){
 
-    const result = {};
+currentIndex=
+Number(
+document
+.getElementById(
+"formsSelect"
+)
+.value
+);
 
-    for (let atk in typeEffect) {
+updateUI();
 
-        let mult = 1;
-
-        for (let def of types) {
-            if (typeEffect[atk][def] !== undefined) {
-                mult *= typeEffect[atk][def];
-            }
-        }
-
-        result[atk] = mult;
-    }
-
-    return result;
 }
 
-function drawTypeChart(types) {
+function updateUI(){
 
-    const match = calc(types);
+if(
+!currentForms.length
+)return;
 
-    const ctx = document.getElementById("typeChart");
+const p=
+currentForms[
+currentIndex
+];
 
-    if (typeChart) typeChart.destroy();
+document
+.getElementById(
+"name"
+)
+.innerText=
+p.name.toUpperCase();
 
-    typeChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: Object.keys(match),
-            datasets: [{
-                data: Object.values(match),
-                backgroundColor: Object.values(match).map(v =>
-                    v >= 2 ? "red" :
-                    v <= 0.5 ? "blue" :
-                    "gray"
-                )
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
-        }
-    });
+const sprite=
+document.getElementById(
+"sprite"
+);
+
+sprite.src=
+shinyMode
+?
+(
+p.sprites.other[
+"official-artwork"
+].front_shiny
+||
+p.sprites.front_shiny
+)
+:
+(
+p.sprites.other[
+"official-artwork"
+].front_default
+||
+p.sprites.front_default
+);
+
+document
+.getElementById(
+"types"
+)
+.innerText=
+"TYPES: "+
+p.types
+.map(
+x=>
+x.type.name
+.toUpperCase()
+)
+.join(" / ");
+
+drawStats(
+p.stats
+);
+
+drawTypeChart(
+p.types.map(
+t=>t.type.name
+)
+);
+
+}
+
+function drawStats(stats){
+
+const ctx=
+document
+.getElementById(
+"statsChart"
+);
+
+if(chart)
+chart.destroy();
+
+chart=
+new Chart(
+ctx,
+{
+type:"radar",
+
+data:{
+
+labels:[
+"HP",
+"ATK",
+"DEF",
+"SPATK",
+"SPDEF",
+"SPD"
+],
+
+datasets:[{
+
+data:
+stats.map(
+s=>
+s.base_stat
+),
+
+backgroundColor:
+"rgba(0,150,255,.3)",
+
+borderColor:
+"blue"
+
+}]
+
+}
+
+}
+
+);
+
+}
+
+function calc(types){
+
+let result={};
+
+for(let atk in typeEffect){
+
+let mult=1;
+
+for(let def of types){
+
+if(
+typeEffect[atk]
+?.[def]
+!==undefined
+){
+
+mult*=
+typeEffect[
+atk
+][
+def
+];
+
+}
+
+}
+
+result[atk]=mult;
+
+}
+
+return result;
+
+}
+
+function drawTypeChart(types){
+
+const match=
+calc(types);
+
+const ctx=
+document.getElementById(
+"typeChart"
+);
+
+if(typeChart)
+typeChart.destroy();
+
+typeChart=
+new Chart(
+ctx,
+{
+type:"bar",
+
+data:{
+
+labels:
+Object.keys(
+match
+),
+
+datasets:[{
+
+data:
+Object.values(
+match
+)
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false
+
+}
+
+}
+
+);
+
 }
