@@ -1,58 +1,104 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Pokédex</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<meta charset="UTF-8">
+
+<title>Pokédex</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
 
-<div class="pokedex" id="pokedex">
+<div class="pokedex">
 
-    <div class="top">
+<div class="top">
 
-        <div class="screen">
+<div class="screen">
 
-            <div class="scan" id="scan"></div>
+<div id="scan"></div>
 
-            <h2 id="name">POKÉDEX</h2>
+<h1 id="name">
+POKÉDEX
+</h1>
 
-            <img id="sprite" />
+<img
+id="sprite"
+class="reveal"
+>
 
-            <p id="types"></p>
+<p
+id="types"
+class="reveal"
+></p>
 
-            <select id="formsSelect" onchange="changeForm()" style="display:none;"></select>
+<select
+id="formsSelect"
+class="reveal"
+onchange="changeForm()"
+></select>
 
-            <p id="desc">ENTER A POKÉMON NUMBER</p>
+<div
+id="evolution"
+class="reveal"
+></div>
 
-        </div>
+</div>
 
-        <div class="statsBox">
-            <canvas id="statsChart"></canvas>
-        </div>
+<div
+class="stats reveal"
+>
 
-    </div>
+<canvas id="statsChart"></canvas>
 
-    <div class="bottom">
-        <canvas id="typeChart"></canvas>
-    </div>
+</div>
 
-    <div class="controls">
+</div>
 
-        <input id="input" placeholder="Enter Pokémon #" />
+<div
+class="type reveal"
+>
 
-        <button onclick="search()">SEARCH</button>
+<canvas id="typeChart"></canvas>
 
-        <button onclick="toggleScan()" id="scanBtn">SCAN: ON</button>
+</div>
 
-        <button onclick="toggleShiny()" id="shinyBtn">SHINY: OFF</button>
+<div class="controls">
 
-    </div>
+<input
+id="input"
+placeholder="Search Pokémon Name or #"
+>
+
+<button onclick="search()">
+SEARCH
+</button>
+
+<button
+onclick="toggleScan()"
+id="scanBtn"
+>
+SCAN ON
+</button>
+
+<button
+onclick="toggleShiny()"
+id="shinyBtn"
+>
+SHINY OFF
+</button>
+
+</div>
 
 </div>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
