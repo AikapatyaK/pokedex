@@ -1,13 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<title>Pokédex</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+<title>POKEDEX</title>
+
+<link rel="icon"
+type="image/png"
+href="pokedex-logo.png">
+
+<link rel="manifest"
+href="manifest.json">
+
+<link rel="apple-touch-icon"
+href="icon-192.png">
+
+<meta name="theme-color"
+content="#cc0000">
+
+<link rel="stylesheet"
+href="style.css">
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -17,54 +34,33 @@
 
 <div class="pokedex">
 
-<div class="top">
-
 <div class="screen">
 
 <div id="scan"></div>
 
 <h1 id="name">
-POKÉDEX
+POKEDEX
 </h1>
 
+<!-- HOME IMAGE -->
 <img
 id="sprite"
-class="reveal"
+src="pokedex-logo.png"
+alt="Pokedex"
 >
 
-<p
-id="types"
-class="reveal"
-></p>
+<p id="types"></p>
 
 <select
 id="formsSelect"
 class="reveal"
-onchange="changeForm()"
-></select>
+onchange="changeForm()">
+</select>
 
 <div
 id="evolution"
-class="reveal"
-></div>
-
+class="reveal">
 </div>
-
-<div
-class="stats reveal"
->
-
-<canvas id="statsChart"></canvas>
-
-</div>
-
-</div>
-
-<div
-class="type reveal"
->
-
-<canvas id="typeChart"></canvas>
 
 </div>
 
@@ -72,26 +68,43 @@ class="type reveal"
 
 <input
 id="input"
-placeholder="Search Pokémon Name or #"
->
+placeholder="Pokédex number or name">
 
 <button onclick="search()">
 SEARCH
 </button>
 
 <button
-onclick="toggleScan()"
 id="scanBtn"
->
+onclick="toggleScan()">
 SCAN ON
 </button>
 
 <button
-onclick="toggleShiny()"
 id="shinyBtn"
->
+onclick="toggleShiny()">
 SHINY OFF
 </button>
+
+</div>
+
+<div class="stats reveal">
+
+<h2>
+STATS
+</h2>
+
+<canvas id="statsChart"></canvas>
+
+</div>
+
+<div class="type reveal">
+
+<h2>
+TYPE EFFECTIVENESS
+</h2>
+
+<canvas id="typeChart"></canvas>
 
 </div>
 
@@ -102,3 +115,4 @@ SHINY OFF
 </body>
 
 </html>
+```
