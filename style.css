@@ -1,196 +1,205 @@
 body{
 
-    margin:0;
-    
-    background:#520000;
-    
-    font-family:Arial;
-    
-    display:flex;
-    
-    justify-content:center;
-    
-    padding:30px;
-    
-    }
-    
-    .pokedex{
-    
-    width:980px;
-    
-    background:
-    linear-gradient(
-    #d60000,
-    #760000
-    );
-    
-    padding:20px;
-    
-    border-radius:25px;
-    
-    }
-    
-    .top{
-    
-    display:flex;
-    
-    gap:15px;
-    
-    }
-    
-    .screen{
-    
-    flex:1;
-    
-    background:#dff7ff;
-    
-    border-radius:18px;
-    
-    padding:20px;
-    
-    position:relative;
-    
-    text-align:center;
-    
-    overflow:hidden;
-    
-    }
-    
-    #scan{
-    
-    position:absolute;
-    
-    left:-150%;
-    
-    top:0;
-    
-    height:100%;
-    
-    width:150%;
-    
-    background:
-    
-    linear-gradient(
-    
-    90deg,
-    
-    transparent,
-    
-    rgba(
-    0,
-    255,
-    255,
-    0.45
-    ),
-    
-    transparent
-    
-    );
-    
-    opacity:0;
-    
-    }
-    
-    .active{
-    
-    opacity:1;
-    
-    animation:
-    scan 1.2s;
-    
-    }
-    
-    @keyframes scan{
-    
-    0%{
-    
-    left:-150%;
-    
-    }
-    
-    100%{
-    
-    left:150%;
-    
-    }
-    
-    }
-    
-    .reveal{
-    
-    opacity:0;
-    
-    transition:
-    all .5s;
-    
-    }
-    
-    .show{
-    
-    opacity:1;
-    
-    }
-    
-    #sprite{
-    
-    width:200px;
-    
-    }
-    
-    .stats{
-    
-    flex:1;
-    
-    background:white;
-    
-    border-radius:18px;
-    
-    padding:10px;
-    
-    }
-    
-    .type{
-    
-    margin-top:15px;
-    
-    background:white;
-    
-    height:280px;
-    
-    padding:10px;
-    
-    border-radius:18px;
-    
-    }
-    
-    .controls{
-    
-    text-align:center;
-    
-    margin-top:15px;
-    
-    }
-    
-    button{
-    
-    padding:10px;
-    
-    margin:5px;
-    
-    }
-    
-    input{
-    
-    padding:10px;
-    
-    width:260px;
-    
-    }
-    
-    #evolution{
-    
-    font-size:20px;
-    
-    margin-top:12px;
-    
-    }
+margin:0;
+
+background:
+
+linear-gradient(
+180deg,
+#730000,
+#300000
+);
+
+font-family:
+
+Arial;
+
+display:flex;
+
+justify-content:center;
+
+padding:20px;
+
+}
+
+.pokedex{
+
+width:95%;
+
+max-width:900px;
+
+background:#cc0000;
+
+border-radius:30px;
+
+padding:20px;
+
+box-sizing:border-box;
+
+}
+
+.screen{
+
+background:#d8f7ff;
+
+padding:20px;
+
+border-radius:20px;
+
+position:relative;
+
+text-align:center;
+
+overflow:hidden;
+
+min-height:340px;
+
+}
+
+#name{
+
+margin:0;
+
+}
+
+#sprite{
+
+width:220px;
+
+max-width:100%;
+
+display:block;
+
+margin:auto;
+
+}
+
+.controls{
+
+margin-top:20px;
+
+text-align:center;
+
+}
+
+button,
+input,
+select{
+
+padding:12px;
+
+margin:5px;
+
+border:none;
+
+border-radius:10px;
+
+}
+
+input{
+
+width:220px;
+
+}
+
+.stats,
+.type{
+
+margin-top:20px;
+
+background:white;
+
+padding:20px;
+
+border-radius:20px;
+
+}
+
+.reveal{
+
+opacity:0;
+
+max-height:0;
+
+overflow:hidden;
+
+transition:
+opacity .6s,
+max-height .7s;
+
+}
+
+.reveal.show{
+
+opacity:1;
+
+max-height:2000px;
+
+}
+
+#scan{
+
+position:absolute;
+
+left:-200%;
+
+top:0;
+
+height:100%;
+
+width:200%;
+
+opacity:0;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(
+0,
+255,
+255,
+0.35
+),
+
+transparent
+
+);
+
+}
+
+.scanActive{
+
+opacity:1;
+
+animation:
+
+scan 1.2s;
+
+}
+
+@keyframes scan{
+
+0%{
+
+left:-200%;
+
+}
+
+100%{
+
+left:200%;
+
+}
+
+}
+
+canvas{
+
+max-height:360px;
+
+}
